@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "PC_TankPLayerControl.h"
+#include "Tank.h"
 #include "Battle_Tank.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
@@ -15,6 +16,7 @@ void APC_TankPLayerControl::BeginPlay()
 	if(!ControlledTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller: no tank has been possesed"))
+
 	
 	}
 	else
@@ -30,6 +32,8 @@ void APC_TankPLayerControl::Tick(float DeltaTime)
 	
 	AimTowardsCrosshair();
 }
+
+
 ATank*APC_TankPLayerControl::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
@@ -43,7 +47,8 @@ void APC_TankPLayerControl::AimTowardsCrosshair()
 	if (GetSightRayHitLocation(HitLocation)) 
 	{
 		//aim towards crosshair
-		UE_LOG(LogTemp, Warning, TEXT("Hit LOC: %s"), *(HitLocation.ToString()))
+		
+		GetControlledTank()->AimAt(HitLocation);
 		
 	}
 	
